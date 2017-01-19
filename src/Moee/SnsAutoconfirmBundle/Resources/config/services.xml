@@ -1,0 +1,18 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+        <parameter key="sns_autoconfirm.listener.whitelist">^https://sns.[a-z0-9-]{2,20}.amazonaws.com/</parameter>
+    </parameters>
+
+    <services>
+        <service id="sns_autoconfirm.controller_listener" class="Moee\SnsAutoconfirmBundle\Listener\ControllerListener" public="true">
+            <argument type="service" id="annotation_reader" />
+            <argument type="service" id="logger" />
+            <tag name="kernel.event_listener" priority="10" event="kernel.controller" method="onKernelController" />
+        </service>
+    </services>
+</container>
